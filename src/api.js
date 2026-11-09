@@ -1,8 +1,8 @@
 // Conexión con los dos escenarios de Make.
-// Se envía el JSON como text/plain para que el navegador no haga la petición previa (CORS preflight);
+// El JSON se envía como text/plain para que el navegador no haga la petición previa (CORS preflight);
 // los webhooks de Make lo reciben igual en {{1.value}} y lo leen con "Parse JSON".
 
-export const HOOK_PROYECTOS = 'https://hook.us2.make.com/57q0kgytqssl3vmhrbughlxjrd2qvkoc' // MUSA 1 · crear / listar / programar
+export const HOOK_PROYECTOS = 'https://hook.us2.make.com/57q0kgytqssl3vmhrbughlxjrd2qvkoc' // MUSA 1 · chat, marcas, posts, agenda
 export const HOOK_PARRILLA = 'https://hook.us2.make.com/rpwthtptd6mcuumhjjm5t5rlklrc2kr8' // MUSA 2 · parrilla de contenido
 export const CLAVE = 'musa2026'
 
@@ -25,8 +25,73 @@ async function enviar(url, datos) {
   }
 }
 
-export const crearProyecto = (onboarding) => enviar(HOOK_PROYECTOS, { accion: 'crear', ...onboarding })
-export const listar = () => enviar(HOOK_PROYECTOS, { accion: 'listar' })
-export const programarAprobados = () => enviar(HOOK_PROYECTOS, { accion: 'programar' })
+// Las marcas llegan como objetos; si llegan como texto (versión anterior), se convierten.
+const normalizarMarca = (m) => (typeof m === 'string' ? { id: m, nombre: m } : m)
+
+export async function listar() {
+  const r = await enviar(HOOK_PROYECTOS, { accion: 'listar' })
+  return {
+    marcas: (r.marcas || []).map(normalizarMarca).filter((m) => m.nombre),
+    plantillas: (r.plantillas || []).filter(Boolean),
+  }
+}
+
+export async function traerPosts() {
+  const r = await enviar(HOOK_PROYECTOS, { accion: 'posts' })
+  return (r.posts || []).filter((p) => p.id)
+}
+
 export const chatear = (datos) => enviar(HOOK_PROYECTOS, { accion: 'chat', ...datos })
-export const crearParrilla =(pedido) => enviar(HOOK_PARRILLA, pedido)
+export const crearProyecto = (datos) => enviar(HOOK_PROYECTOS, { accion: 'crear', ...datos })
+export const agendarAprobados = () => enviar(HOOK_PROYECTOS, { accion: 'programar' })
+export const cambiarEstado = (post_id, estado, comentario = '') =>
+  enviar(HOOK_PROYECTOS, { accion: 'estado', post_id, estado, comentario })
+export const crearParrilla = (pedido) => enviar(HOOK_PARRILLA, pedido)
+
+// Utilidades
+export const coloresDe = (texto = '') => (texto.match(/#[0-9a-fA-F]{6}\b/g) || []).slice(0, 4)
+
+export function elegirPlantilla(peticion = '', plantillas = []) {
+  const t = peticion.toLowerCase()
+  const reglas = [
+    [/navid|diciembre|madre|padre|amor|halloween|black friday|fecha|aniversario|temporada/, 'Fecha especial'],
+    [/lanz|nuev|estren/, 'Lanzamiento de producto'],
+    [/promo|descuento|oferta|2x1|precio/, 'Promo / oferta'],
+    [/tip|cómo|como |aprend|guía|paso/, 'Educativo / tips'],
+    [/equipo|proceso|detrás|detras|taller|cocina/, 'Detrás de cámaras'],
+    [/tendencia|viral|trend/, 'Subirse a una tendencia'],
+  ]
+  const hit = reglas.find(([re]) => re.test(t))
+  const nombre = hit ? hit[1] : 'Subirse a una tendencia'
+  return plantillas.find((p) => p.toLowerCase() === nombre.toLowerCase()) || plantillas[0] || nombre
+}
+
+export function formatoFecha(iso) {
+  if (!iso) return 'Sin fecha'
+  const d = new Date(iso)
+  if (isNaN(d)) return iso
+  const conHora = iso.length > 10
+  return d.toLocaleString('es-CO', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    ...(conHora ? { hour: 'numeric', minute: '2-digit' } : {}),
+    ...(conHora ? {} : { timeZone: 'UTC' }),
+  })
+}
+
+export const guardar = (k, v) => {
+  try {
+    localStorage.setItem(k, JSON.stringify(v))
+  } catch {
+    /* sin almacenamiento */
+  }
+}
+export const leer = (k, def) => {
+  try {
+    const v = localStorage.getItem(k)
+    return v ? JSON.parse(v) : def
+  } catch {
+    return def
+  }
+}
