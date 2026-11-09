@@ -157,7 +157,7 @@ export default function Revision({ posts, cargandoPosts, errorPosts, cargarPosts
                   {abierto === p.id && p.contenido && (
                     <div className="guion">
                       <span className="dato-label">{formato === 'reel' ? 'Guion' : 'Contenido'}</span>
-                      {p.contenido.split(' · ').map((l, i) => (
+                      {p.contenido.split(/\n| · /).filter(Boolean).map((l, i) => (
                         <p key={i}>{l}</p>
                       ))}
                     </div>
