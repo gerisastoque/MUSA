@@ -7,9 +7,12 @@ import {
   NOTION_MUSA,
   GOOGLE_CALENDAR,
 } from './api'
+import Chat from './Chat'
+import { leerBrandbook } from './leerArchivo'
 
 const VISTAS = [
   { id: 'inicio', nombre: 'Inicio' },
+  { id: 'chat', nombre: 'Habla con MUSA' },
   { id: 'marca', nombre: 'Nueva marca' },
   { id: 'parrilla', nombre: 'Crear parrilla' },
   { id: 'agenda', nombre: 'Revisar y programar' },
@@ -45,11 +48,11 @@ export default function App() {
           {VISTAS.slice(1).map((v, i) => (
             <button
               key={v.id}
-              className={vista === v.id ? 'nav-item activo' : 'nav-item'}
+              className={(vista === v.id ? 'nav-item activo' : 'nav-item') + (v.id === 'chat' ? ' nav-chat' : '')}
               onClick={() => setVista(v.id)}
               aria-current={vista === v.id ? 'page' : undefined}
             >
-              <span className="nav-num">{i + 1}</span>
+              <span className="nav-num">{v.id === 'chat' ? '✦' : i}</span>
               {v.nombre}
             </button>
           ))}
@@ -58,6 +61,7 @@ export default function App() {
 
       <main>
         {vista === 'inicio' && <Inicio ir={setVista} />}
+        {vista === 'chat' && <Chat />}
         {vista === 'marca' && <NuevaMarca ir={setVista} />}
         {vista === 'parrilla' && <Parrilla ir={setVista} />}
         {vista === 'agenda' && <Agenda />}
@@ -89,11 +93,11 @@ function Inicio({ ir }) {
           contenido con copy, guiones de reels y prompts de imagen. Tú revisas, apruebas y MUSA te lo agenda.
         </p>
         <div className="acciones">
-          <button className="btn btn-musa" onClick={() => ir('marca')}>
-            Empezar con una marca
+          <button className="btn btn-musa" onClick={() => ir('chat')}>
+            Habla con MUSA
           </button>
-          <button className="btn btn-linea" onClick={() => ir('parrilla')}>
-            Ya tengo una marca
+          <button className="btn btn-linea" onClick={() => ir('marca')}>
+            Prefiero llenar el formulario
           </button>
         </div>
       </section>
@@ -173,7 +177,20 @@ const MARCA_INICIAL = {
 function NuevaMarca({ ir }) {
   const [f, setF] = useState(MARCA_INICIAL)
   const [estado, setEstado] = useState({ tipo: 'idle' })
+  const [modo, setModo] = useState('cero')
+  const [bb, setBb] = useState({ nombre: '', texto: '', error: '' })
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value })
+
+  async function alSubir(e) {
+    const archivo = e.target.files?.[0]
+    if (!archivo) return
+    try {
+      const leido = await leerBrandbook(archivo)
+      setBb({ nombre: leido.nombre, texto: leido.texto, error: '' })
+    } catch (err) {
+      setBb({ nombre: '', texto: '', error: err.message })
+    }
+  }
 
   const toggleRed = (red) =>
     setF({ ...f, redes: f.redes.includes(red) ? f.redes.filter((r) => r !== red) : [...f.redes, red] })
@@ -188,11 +205,14 @@ function NuevaMarca({ ir }) {
     e.preventDefault()
     setEstado({ tipo: 'cargando' })
     try {
-      const datos = {
-        ...f,
-        colores: f.colores.map((c, i) => `${c} ${['principal', 'secundario', 'acento'][i]}`).join(', '),
-        redes: f.redes.join(', '),
-      }
+      const datos =
+        modo === 'brandbook'
+          ? { marca: f.marca, correo: f.correo, brandbook_existente: bb.texto }
+          : {
+              ...f,
+              colores: f.colores.map((c, i) => `${c} ${['principal', 'secundario', 'acento'][i]}`).join(', '),
+              redes: f.redes.join(', '),
+            }
       const r = await crearProyecto(datos)
       setEstado({ tipo: 'listo', r })
     } catch (err) {
@@ -222,94 +242,130 @@ function NuevaMarca({ ir }) {
         texto="Con esto MUSA arma el brandbook. Si no sabes algo, déjalo vacío: MUSA te propone una opción y la marca como sugerida."
       />
 
-      <Grupo titulo="La marca">
-        <Campo label="Nombre de la marca" requerido>
-          <input required value={f.marca} onChange={set('marca')} placeholder="Café Aurora" />
-        </Campo>
-        <Campo label="Sector">
-          <input value={f.sector} onChange={set('sector')} placeholder="Café de especialidad" />
-        </Campo>
-        <Campo label="¿Qué vende o qué hace?" ancho>
-          <textarea rows="3" value={f.que_vende} onChange={set('que_vende')} placeholder="Una cafetería en Cali que tuesta su propio café de fincas del Valle..." />
-        </Campo>
-        <Campo label="¿A quién le habla?" ancho>
-          <textarea rows="2" value={f.audiencia} onChange={set('audiencia')} placeholder="Estudiantes y jóvenes profesionales de 20 a 35 años que trabajan desde cafés..." />
-        </Campo>
-        <Campo label="País o ciudad">
-          <input value={f.pais} onChange={set('pais')} />
-        </Campo>
-      </Grupo>
+      <div className="modos" role="radiogroup" aria-label="¿La marca ya tiene brandbook?">
+        <button type="button" role="radio" aria-checked={modo === 'cero'} className={modo === 'cero' ? 'modo activo' : 'modo'} onClick={() => setModo('cero')}>
+          <strong>Empezar de cero</strong>
+          <span className="muted small">Respondes unas preguntas y MUSA arma el brandbook.</span>
+        </button>
+        <button type="button" role="radio" aria-checked={modo === 'brandbook'} className={modo === 'brandbook' ? 'modo activo' : 'modo'} onClick={() => setModo('brandbook')}>
+          <strong>Ya tengo brandbook</strong>
+          <span className="muted small">Lo subes y MUSA lo pasa a Notion respetando lo que ya está definido.</span>
+        </button>
+      </div>
 
-      <Grupo titulo="Cómo habla">
-        <Campo label="Personalidad (3 palabras)">
-          <input value={f.personalidad} onChange={set('personalidad')} placeholder="Cálida, curiosa, honesta" />
-        </Campo>
-        <Campo label="Le habla a la gente de">
-          <div className="segmentado" role="radiogroup">
-            {['tú', 'usted'].map((t) => (
-              <button type="button" key={t} role="radio" aria-checked={f.tono === t} className={f.tono === t ? 'seg activo' : 'seg'} onClick={() => setF({ ...f, tono: t })}>
-                {t}
-              </button>
-            ))}
-          </div>
-        </Campo>
-        <Campo label="Temas de los que quiere hablar" ancho>
-          <textarea rows="2" value={f.temas} onChange={set('temas')} placeholder="El origen del café, recetas en casa, la comunidad del local, lanzamientos..." />
-        </Campo>
-        <Campo label="Palabras o temas prohibidos" ancho>
-          <input value={f.palabras_prohibidas} onChange={set('palabras_prohibidas')} placeholder="barato, el mejor, política" />
-        </Campo>
-      </Grupo>
+      {modo === 'brandbook' && (
+        <Grupo titulo="Tu brandbook">
+          <Campo label="Nombre de la marca" requerido>
+            <input required value={f.marca} onChange={set('marca')} placeholder="Café Aurora" />
+          </Campo>
+          <Campo label="Correo de la persona responsable">
+            <input type="email" value={f.correo} onChange={set('correo')} placeholder="responsable@marca.com" />
+          </Campo>
+          <Campo label="Archivo (PDF, TXT o MD)" ancho ayuda="MUSA lee el texto del archivo. Si tu PDF es una imagen escaneada, pega el texto abajo.">
+            <label className="subir">
+              <input type="file" accept=".pdf,.txt,.md,application/pdf,text/plain" onChange={alSubir} />
+              <span>{bb.nombre ? `✓ ${bb.nombre} (${bb.texto.length.toLocaleString('es-CO')} caracteres leídos)` : 'Elige o arrastra tu brandbook aquí'}</span>
+            </label>
+            {bb.error && <span className="error small">{bb.error}</span>}
+          </Campo>
+          <Campo label="…o pega el texto del brandbook" ancho>
+            <textarea rows="6" value={bb.texto} onChange={(e) => setBb({ ...bb, texto: e.target.value })} placeholder="Misión, tono de voz, colores, tipografías, lo que la marca dice y no dice..." />
+          </Campo>
+        </Grupo>
+      )}
 
-      <Grupo titulo="Cómo se ve">
-        <Campo label="Colores de la marca" ancho>
-          <div className="colores">
-            {f.colores.map((c, i) => (
-              <label key={i} className="color">
-                <input type="color" value={c} onChange={(e) => setColor(i, e.target.value)} />
-                <span>
-                  <strong>{['Principal', 'Secundario', 'Acento'][i]}</strong>
-                  <span className="muted">{c.toUpperCase()}</span>
-                </span>
-              </label>
-            ))}
-          </div>
-        </Campo>
-        <Campo label="Tipografías">
-          <input value={f.tipografias} onChange={set('tipografias')} placeholder="Playfair Display y Lato" />
-        </Campo>
-        <Campo label="Estilo de las imágenes">
-          <input value={f.estilo_visual} onChange={set('estilo_visual')} placeholder="Fotos cálidas con luz natural" />
-        </Campo>
-        <Campo label="Qué nunca debe aparecer en las imágenes" ancho>
-          <input value={f.evitar_imagenes} onChange={set('evitar_imagenes')} placeholder="Vasos desechables, fondos blancos de estudio" />
-        </Campo>
-        <Campo label="Referencias (cuentas o marcas que le gustan)" ancho>
-          <input value={f.referencias} onChange={set('referencias')} placeholder="@cuenta1, @cuenta2" />
-        </Campo>
-      </Grupo>
+      {modo === 'cero' && (
+        <>
+        <Grupo titulo="La marca">
+          <Campo label="Nombre de la marca" requerido>
+            <input required value={f.marca} onChange={set('marca')} placeholder="Café Aurora" />
+          </Campo>
+          <Campo label="Sector">
+            <input value={f.sector} onChange={set('sector')} placeholder="Café de especialidad" />
+          </Campo>
+          <Campo label="¿Qué vende o qué hace?" ancho>
+            <textarea rows="3" value={f.que_vende} onChange={set('que_vende')} placeholder="Una cafetería en Cali que tuesta su propio café de fincas del Valle..." />
+          </Campo>
+          <Campo label="¿A quién le habla?" ancho>
+            <textarea rows="2" value={f.audiencia} onChange={set('audiencia')} placeholder="Estudiantes y jóvenes profesionales de 20 a 35 años que trabajan desde cafés..." />
+          </Campo>
+          <Campo label="País o ciudad">
+            <input value={f.pais} onChange={set('pais')} />
+          </Campo>
+        </Grupo>
 
-      <Grupo titulo="Dónde y con quién">
-        <Campo label="Redes donde publica" ancho>
-          <div className="chips">
-            {REDES.map((r) => (
-              <button type="button" key={r} aria-pressed={f.redes.includes(r)} className={f.redes.includes(r) ? 'chip-btn activo' : 'chip-btn'} onClick={() => toggleRed(r)}>
-                {r}
-              </button>
-            ))}
-          </div>
-        </Campo>
-        <Campo label="Correo de la persona responsable" ayuda="Recibe la invitación de Google Calendar cada vez que se programe un post." ancho>
-          <input type="email" value={f.correo} onChange={set('correo')} placeholder="responsable@marca.com" />
-        </Campo>
-      </Grupo>
+        <Grupo titulo="Cómo habla">
+          <Campo label="Personalidad (3 palabras)">
+            <input value={f.personalidad} onChange={set('personalidad')} placeholder="Cálida, curiosa, honesta" />
+          </Campo>
+          <Campo label="Le habla a la gente de">
+            <div className="segmentado" role="radiogroup">
+              {['tú', 'usted'].map((t) => (
+                <button type="button" key={t} role="radio" aria-checked={f.tono === t} className={f.tono === t ? 'seg activo' : 'seg'} onClick={() => setF({ ...f, tono: t })}>
+                  {t}
+                </button>
+              ))}
+            </div>
+          </Campo>
+          <Campo label="Temas de los que quiere hablar" ancho>
+            <textarea rows="2" value={f.temas} onChange={set('temas')} placeholder="El origen del café, recetas en casa, la comunidad del local, lanzamientos..." />
+          </Campo>
+          <Campo label="Palabras o temas prohibidos" ancho>
+            <input value={f.palabras_prohibidas} onChange={set('palabras_prohibidas')} placeholder="barato, el mejor, política" />
+          </Campo>
+        </Grupo>
+
+        <Grupo titulo="Cómo se ve">
+          <Campo label="Colores de la marca" ancho>
+            <div className="colores">
+              {f.colores.map((c, i) => (
+                <label key={i} className="color">
+                  <input type="color" value={c} onChange={(e) => setColor(i, e.target.value)} />
+                  <span>
+                    <strong>{['Principal', 'Secundario', 'Acento'][i]}</strong>
+                    <span className="muted">{c.toUpperCase()}</span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </Campo>
+          <Campo label="Tipografías">
+            <input value={f.tipografias} onChange={set('tipografias')} placeholder="Playfair Display y Lato" />
+          </Campo>
+          <Campo label="Estilo de las imágenes">
+            <input value={f.estilo_visual} onChange={set('estilo_visual')} placeholder="Fotos cálidas con luz natural" />
+          </Campo>
+          <Campo label="Qué nunca debe aparecer en las imágenes" ancho>
+            <input value={f.evitar_imagenes} onChange={set('evitar_imagenes')} placeholder="Vasos desechables, fondos blancos de estudio" />
+          </Campo>
+          <Campo label="Referencias (cuentas o marcas que le gustan)" ancho>
+            <input value={f.referencias} onChange={set('referencias')} placeholder="@cuenta1, @cuenta2" />
+          </Campo>
+        </Grupo>
+
+        <Grupo titulo="Dónde y con quién">
+          <Campo label="Redes donde publica" ancho>
+            <div className="chips">
+              {REDES.map((r) => (
+                <button type="button" key={r} aria-pressed={f.redes.includes(r)} className={f.redes.includes(r) ? 'chip-btn activo' : 'chip-btn'} onClick={() => toggleRed(r)}>
+                  {r}
+                </button>
+              ))}
+            </div>
+          </Campo>
+          <Campo label="Correo de la persona responsable" ayuda="Recibe la invitación de Google Calendar cada vez que se programe un post." ancho>
+            <input type="email" value={f.correo} onChange={set('correo')} placeholder="responsable@marca.com" />
+          </Campo>
+        </Grupo>
+        </>
+      )}
 
       {estado.tipo === 'error' && <AvisoError mensaje={estado.mensaje} />}
 
       <div className="form-fin">
         <p className="muted small">MUSA tarda alrededor de un minuto en crear el brandbook.</p>
-        <button className="btn btn-musa" type="submit" disabled={!f.marca.trim()}>
-          Crear brandbook
+        <button className="btn btn-musa" type="submit" disabled={!f.marca.trim() || (modo === 'brandbook' && !bb.texto.trim())}>
+          {modo === 'brandbook' ? 'Importar brandbook' : 'Crear brandbook'}
         </button>
       </div>
     </form>

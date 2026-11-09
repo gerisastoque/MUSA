@@ -28,4 +28,5 @@ async function enviar(url, datos) {
 export const crearProyecto = (onboarding) => enviar(HOOK_PROYECTOS, { accion: 'crear', ...onboarding })
 export const listar = () => enviar(HOOK_PROYECTOS, { accion: 'listar' })
 export const programarAprobados = () => enviar(HOOK_PROYECTOS, { accion: 'programar' })
-export const crearParrilla = (pedido) => enviar(HOOK_PARRILLA, pedido)
+export const chatear = (datos) => enviar(HOOK_PROYECTOS, { accion: 'chat', ...datos })
+export const crearParrilla =(pedido) => enviar(HOOK_PARRILLA, pedido)
