@@ -306,6 +306,13 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 .selector-marca select { appearance: none; border: 0; background: transparent; padding: 0 20px 0 0; min-height: 0; font-weight: 700; cursor: pointer; width: auto; }
 .selector-marca select:focus { box-shadow: none; }
 .selector-marca svg { position: absolute; right: 12px; pointer-events: none; }
+.chats-barra { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: -6px; }
+.chats-barra .btn { gap: 6px; }
+.selector-chat { min-height: 42px; flex: 0 1 340px; min-width: 0; font-weight: 600; font-size: 14px; padding-left: 12px; }
+.selector-chat > svg:first-child { position: static; }
+.selector-chat select { flex: 1; min-width: 0; text-overflow: ellipsis; font-weight: 600; }
+.btn-borrar { width: 42px; height: 42px; background: transparent; color: var(--ink); }
+.btn-borrar:hover { background: var(--rosa-suave, #FFE1EF); }
 .mensajes { flex: 1; display: flex; flex-direction: column; gap: 16px; }
 .fila-musa { display: flex; gap: 12px; align-items: flex-end; max-width: 88%; }
 .avatar { flex: none; width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--ink); overflow: hidden; display: grid; place-items: center; }

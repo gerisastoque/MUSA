@@ -33,8 +33,13 @@ export default function Chat({
   cargarMarcas,
   cargarPosts,
   ir,
+  chatId,
+  chats = [],
   mensajes,
-  setMensajes,
+  actualizarChat,
+  abrirChat,
+  empezarChat,
+  borrarChat,
   pendiente,
   limpiarPendiente,
   tendencias = [],
@@ -47,8 +52,9 @@ export default function Chat({
   const archivoRef = useRef(null)
   const enviadoPendiente = useRef(false)
 
-  const agregar = (m) => setMensajes((prev) => [...prev, m])
-  const marcar = (i, cambios) => setMensajes((prev) => prev.map((m, j) => (j === i ? { ...m, ...cambios } : m)))
+  // Cada respuesta vuelve a SU chat, aunque la persona ya esté en otro
+  const agregar = (m) => actualizarChat(chatId, (prev) => [...prev, m])
+  const marcar = (i, cambios) => actualizarChat(chatId, (prev) => prev.map((m, j) => (j === i ? { ...m, ...cambios } : m)))
 
   useEffect(() => {
     finRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
@@ -167,10 +173,12 @@ export default function Chat({
         })
       } else if (accion === 'crear_parrilla') {
         const cantidad = Math.min(5, Math.max(1, Number(datos.cantidad_posts) || 3))
-        const marca = marcas.find((m) => m.nombre.toLowerCase() === (datos.marca || '').toLowerCase()) || activa
-        const antes = posts.filter((p) => p.proyecto === marca?.id && p.estado === 'Por revisar').length
+        const marca = buscarMarca(marcas, datos.marca) || activa
+        if (!marca) throw new Error('sin marca')
+        const antes = posts.filter((p) => p.proyecto === marca.id && p.estado === 'Por revisar').length
         await crearParrilla({
-          proyecto: datos.marca || activa?.nombre,
+          // Make busca la marca por su nombre exacto en Notion: siempre mandamos el nombre tal cual está guardado
+          proyecto: marca.nombre,
           plantilla: datos.plantilla,
           peticion: datos.peticion,
           fecha_inicio: datos.fecha_inicio,
@@ -180,9 +188,9 @@ export default function Chat({
         agregar({
           de: 'musa',
           expresion: 'investigando',
-          texto: `¡Manos a la obra! Make ya está buscando inspiración y escribiendo ${cantidad} ${cantidad === 1 ? 'post' : 'posts'} para ${datos.marca || activa?.nombre}. Tarda de 2 a 4 minutos; te aviso aquí cuando estén listos.`,
+          texto: `¡Manos a la obra! Make ya está buscando inspiración y escribiendo ${cantidad} ${cantidad === 1 ? 'post' : 'posts'} para ${marca.nombre}. Tarda de 2 a 4 minutos; te aviso aquí cuando estén listos.`,
         })
-        if (marca) vigilarParrilla(marca.id, cantidad, antes)
+        vigilarParrilla(marca.id, cantidad, antes)
       } else if (accion === 'agendar') {
         await agendarAprobados()
         marcar(i, { estado: 'hecho' })
@@ -220,6 +228,7 @@ export default function Chat({
   }
 
   const soloSaludo = mensajes.length === 1
+  const conversado = mensajes.some((m) => m.de === 'yo')
 
   return (
     <div className="pagina chat-pagina">
@@ -241,6 +250,38 @@ export default function Chat({
             </label>
           )}
         </header>
+
+        <div className="chats-barra">
+          <button className="btn btn-linea btn-chico" onClick={empezarChat} disabled={!conversado}>
+            <Svg nombre="mas" size={16} /> Nuevo chat
+          </button>
+          {chats.length > 1 && (
+            <label className="selector-marca selector-chat">
+              <Svg nombre="chat" size={16} />
+              <span className="sr">Tus chats</span>
+              <select value={chatId} onChange={(e) => abrirChat(e.target.value)}>
+                {chats.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.titulo} · {cuando(c.actualizado)}
+                  </option>
+                ))}
+              </select>
+              <Svg nombre="abajo" size={16} />
+            </label>
+          )}
+          {conversado && (
+            <button
+              className="btn-icono btn-borrar"
+              aria-label="Borrar este chat"
+              title="Borrar este chat"
+              onClick={() => {
+                if (window.confirm('¿Borro este chat? Lo que MUSA ya creó en Notion no se borra.')) borrarChat(chatId)
+              }}
+            >
+              <Svg nombre="basura" size={18} />
+            </button>
+          )}
+        </div>
 
         <div className="mensajes" aria-live="polite">
           {mensajes.map((m, i) => (
@@ -377,6 +418,27 @@ export default function Chat({
   )
 }
 
+const normal = (s = '') =>
+  s
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .trim()
+
+// Encuentra la marca aunque el agente la escriba sin tildes o con otras mayúsculas
+function buscarMarca(marcas, nombre) {
+  const n = normal(nombre)
+  if (!n) return null
+  return marcas.find((m) => normal(m.nombre) === n) || marcas.find((m) => normal(m.nombre).includes(n) || n.includes(normal(m.nombre))) || null
+}
+
+function cuando(ms) {
+  const d = new Date(ms)
+  const hoy = new Date()
+  if (d.toDateString() === hoy.toDateString()) return d.toLocaleTimeString('es-CO', { hour: 'numeric', minute: '2-digit' })
+  return d.toLocaleDateString('es-CO', { day: 'numeric', month: 'short' })
+}
+
 function Avatar({ expresion }) {
   const fondo = { celebrando: '#FFE1EF', investigando: '#C8EB85', confundida: '#FFFFFF', creando: '#EDE7FF' }[expresion] || '#FFD66B'
   return (
@@ -457,6 +519,7 @@ function Plan({ m, onSi, onNo }) {
       {m.estado === 'ejecutando' && <Progreso pasos={PASOS[m.accion] || ['Trabajando en eso…']} />}
       {m.estado === 'hecho' && <span className="chip-estado estado-aprobado">Hecho</span>}
       {m.estado === 'cancelado' && <span className="ayuda">Lo dejamos para después.</span>}
+      {m.estado === 'interrumpido' && <span className="ayuda">Se cerró la página mientras trabajaba. Revisa la sala de revisión antes de pedirlo otra vez.</span>}
     </div>
   )
 }

@@ -150,6 +150,8 @@ export const Icono = {
   enviar: <path d="M5 12h14M13 6l6 6-6 6" />,
   externo: <path d="M7 17L17 7M8 7h9v9" />,
   abajo: <path d="M6 9l6 6 6-6" />,
+  mas: <path d="M12 5v14M5 12h14" />,
+  basura: <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />,
 }
 
 export function Svg({ nombre, size = 20 }) {

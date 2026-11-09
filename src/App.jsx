@@ -24,6 +24,19 @@ const SALUDO = {
   texto: '¡Hola! Soy MUSA, tu compañera creativa. Puedo conocer una marca nueva (o leer su brandbook), armarte la parrilla de la semana o agendar lo que ya aprobaste. ¿Con qué empezamos?',
 }
 
+const nuevoChat = (marcaId = null) => {
+  const ahora = Date.now()
+  return { id: ahora.toString(36) + Math.random().toString(36).slice(2, 6), titulo: 'Chat nuevo', marcaId, actualizado: ahora, mensajes: [SALUDO] }
+}
+
+// Si la página se cerró mientras MUSA ejecutaba algo, no lo dejamos "trabajando" para siempre
+const limpiarChat = (c) => ({
+  ...c,
+  mensajes: (c.mensajes || [SALUDO]).map((m) => (m.estado === 'ejecutando' ? { ...m, estado: 'interrumpido' } : m)),
+})
+
+const recortar = (t) => (t.length > 42 ? t.slice(0, 40).trim() + '…' : t)
+
 export default function App() {
   const [vista, setVista] = useState(() => {
     const h = window.location.hash.replace('#', '')
@@ -32,7 +45,11 @@ export default function App() {
   const [datos, setDatos] = useState({ marcas: [], plantillas: [], cargando: true, error: false })
   const [posts, setPosts] = useState({ lista: [], cargando: true, error: false })
   const [activaId, setActivaId] = useState(() => leer('musa-marca-activa', null))
-  const [mensajes, setMensajes] = useState([SALUDO])
+  const [chats, setChats] = useState(() => {
+    const guardados = leer('musa-chats', null)
+    return Array.isArray(guardados) && guardados.length ? guardados.map(limpiarChat) : [nuevoChat(leer('musa-marca-activa', null))]
+  })
+  const [chatId, setChatId] = useState(() => leer('musa-chat-actual', null))
   const [pendienteChat, setPendienteChat] = useState('')
   const [tendencias, setTendencias] = useState({ lista: [], musica: [], cargando: true })
 
@@ -76,13 +93,72 @@ export default function App() {
   const activa = marcas.find((m) => m.id === activaId) || marcas[0] || null
   const porRevisar = posts.lista.filter((p) => p.estado === 'Por revisar').length
 
+  const chatsOrdenados = useMemo(() => [...chats].sort((a, b) => b.actualizado - a.actualizado), [chats])
+  const chatActual = chats.find((c) => c.id === chatId) || chatsOrdenados[0]
+
+  useEffect(() => {
+    guardar('musa-chats', chatsOrdenados.slice(0, 30))
+  }, [chatsOrdenados])
+
+  useEffect(() => {
+    guardar('musa-chat-actual', chatActual.id)
+  }, [chatActual.id])
+
+  // Actualiza los mensajes de un chat concreto (aunque la persona ya se haya cambiado a otro)
+  const actualizarChat = useCallback((id, fn) => {
+    setChats((cs) =>
+      cs.map((c) => {
+        if (c.id !== id) return c
+        const mensajes = typeof fn === 'function' ? fn(c.mensajes) : fn
+        const primero = mensajes.find((m) => m.de === 'yo')
+        return {
+          ...c,
+          mensajes,
+          actualizado: Date.now(),
+          titulo: c.titulo === 'Chat nuevo' && primero ? recortar(primero.texto) : c.titulo,
+        }
+      }),
+    )
+  }, [])
+
   const elegirMarca = (id) => {
     setActivaId(id)
     guardar('musa-marca-activa', id)
+    setChats((cs) => cs.map((c) => (c.id === chatActual.id ? { ...c, marcaId: id } : c)))
+  }
+
+  const abrirChat = (id) => {
+    const c = chats.find((x) => x.id === id)
+    if (!c) return
+    setChatId(id)
+    if (c.marcaId && marcas.some((m) => m.id === c.marcaId)) {
+      setActivaId(c.marcaId)
+      guardar('musa-marca-activa', c.marcaId)
+    }
+  }
+
+  const empezarChat = () => {
+    // Si el chat actual está vacío, no creamos otro igual
+    if (!chatActual.mensajes.some((m) => m.de === 'yo')) return chatActual.id
+    const c = nuevoChat(activa?.id || null)
+    setChats((cs) => [c, ...cs].slice(0, 30))
+    setChatId(c.id)
+    return c.id
+  }
+
+  const borrarChat = (id) => {
+    setChats((cs) => {
+      const quedan = cs.filter((c) => c.id !== id)
+      return quedan.length ? quedan : [nuevoChat(activa?.id || null)]
+    })
+    setChatId(null)
   }
 
   const ir = (id, mensajeChat) => {
-    if (mensajeChat) setPendienteChat(mensajeChat)
+    if (mensajeChat) {
+      empezarChat()
+      setPendienteChat(mensajeChat)
+    }
     setVista(id)
   }
 
@@ -165,8 +241,14 @@ export default function App() {
         {vista === 'chat' && (
           <Chat
             {...ctx}
-            mensajes={mensajes}
-            setMensajes={setMensajes}
+            key={chatActual.id}
+            chatId={chatActual.id}
+            chats={chatsOrdenados}
+            mensajes={chatActual.mensajes}
+            actualizarChat={actualizarChat}
+            abrirChat={abrirChat}
+            empezarChat={empezarChat}
+            borrarChat={borrarChat}
             pendiente={pendienteChat}
             limpiarPendiente={() => setPendienteChat('')}
           />
