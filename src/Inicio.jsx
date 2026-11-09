@@ -4,7 +4,7 @@ import { Etiqueta, PuntosColor, Svg } from './piezas'
 
 const SUGERENCIAS = ['Tengo una marca nueva', 'Arma mi parrilla de la semana', 'Agenda lo que aprobé']
 
-export default function Inicio({ marcas, posts, activa, elegirMarca, ir, cargandoMarcas }) {
+export default function Inicio({ marcas, posts, activa, elegirMarca, ir, cargandoMarcas, tendencias = [], cargandoTendencias }) {
   const [idea, setIdea] = useState('')
   const porRevisar = posts.filter((p) => p.estado === 'Por revisar').length
 
@@ -97,6 +97,54 @@ export default function Inicio({ marcas, posts, activa, elegirMarca, ir, cargand
             <Estrella size={22} />
           </span>
         </div>
+      </section>
+
+      <section className="seccion">
+        <div className="seccion-cabeza">
+          <div className="titulo-con-etiqueta">
+            <span className="etiqueta etiqueta-lima">
+              <span className="punto-vivo" /> EN VIVO · GOOGLE TRENDS COLOMBIA
+            </span>
+            <h2 className="display-m">Lo que está pasando hoy</h2>
+          </div>
+          <button className="enlace" onClick={() => ir('chat', '¿Qué está en tendencia hoy y cuál le sirve a mi marca?')}>
+            Pregúntale a MUSA cuál te sirve →
+          </button>
+        </div>
+        <p className="lead">
+          Lo más buscado en Colombia, con la noticia que lo explica. MUSA solo usa las tendencias que encajan con tu marca y
+          descarta las de riesgo (política, tragedias, polémicas).
+        </p>
+        {cargandoTendencias ? (
+          <div className="tendencias-grid">
+            {[0, 1, 2, 3].map((i) => (
+              <div key={i} className="tendencia esqueleto" />
+            ))}
+          </div>
+        ) : tendencias.length === 0 ? (
+          <p className="muted">No hay tendencias frescas por ahora. Probemos otro ángulo más tarde.</p>
+        ) : (
+          <div className="tendencias-grid">
+            {tendencias.slice(0, 8).map((t, i) => {
+              const n = t.noticias[0]
+              return (
+                <article key={t.titulo + i} className="tendencia">
+                  <div className="fila-entre">
+                    <span className="tendencia-num">{String(i + 1).padStart(2, '0')}</span>
+                    {t.trafico && <span className="chip-suave tono-2">{t.trafico} búsquedas</span>}
+                  </div>
+                  <h3>{t.titulo}</h3>
+                  {n && (
+                    <a href={n.url} target="_blank" rel="noreferrer" className="tendencia-fuente">
+                      {n.titulo}
+                      <span>{n.medio} ↗</span>
+                    </a>
+                  )}
+                </article>
+              )
+            })}
+          </div>
+        )}
       </section>
 
       <section className="seccion">

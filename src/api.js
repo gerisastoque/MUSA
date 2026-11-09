@@ -95,3 +95,41 @@ export const leer = (k, def) => {
     return def
   }
 }
+
+// Tendencias de hoy en Colombia (Google Trends, vía Make). Se guardan 30 min en la sesión.
+export async function traerTendencias() {
+  try {
+    const cache = JSON.parse(sessionStorage.getItem('musa-tendencias') || 'null')
+    if (cache && Date.now() - cache.t < 30 * 60 * 1000) return cache.lista
+  } catch {
+    /* sin almacenamiento */
+  }
+  const r = await enviar(HOOK_PROYECTOS, { accion: 'tendencias' })
+  const doc = new DOMParser().parseFromString(r.xml || '', 'text/xml')
+  const NS = 'https://trends.google.com/trending/rss'
+  const texto = (el, tag) => el.getElementsByTagNameNS(NS, tag)[0]?.textContent?.trim() || ''
+  const lista = [...doc.getElementsByTagName('item')].map((item) => ({
+    titulo: item.getElementsByTagName('title')[0]?.textContent?.trim() || '',
+    trafico: texto(item, 'approx_traffic'),
+    noticias: [...item.getElementsByTagNameNS(NS, 'news_item')].slice(0, 2).map((n) => ({
+      titulo: texto(n, 'news_item_title'),
+      url: texto(n, 'news_item_url'),
+      medio: texto(n, 'news_item_source'),
+    })),
+  })).filter((t) => t.titulo)
+  try {
+    sessionStorage.setItem('musa-tendencias', JSON.stringify({ t: Date.now(), lista }))
+  } catch {
+    /* sin almacenamiento */
+  }
+  return lista
+}
+
+export const tendenciasParaChat = (lista = []) =>
+  lista
+    .slice(0, 10)
+    .map((t) => {
+      const n = t.noticias[0]
+      return n ? `${t.titulo} (noticia: "${n.titulo}" de ${n.medio}, ${n.url})` : t.titulo
+    })
+    .join('; ')

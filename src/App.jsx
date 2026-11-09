@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { listar, traerPosts, coloresDe, leer, guardar, NOTION_MUSA } from './api'
+import { listar, traerPosts, traerTendencias, coloresDe, leer, guardar, NOTION_MUSA } from './api'
 import { Estrella } from './Mascota'
 import { PuntosColor, Svg } from './piezas'
 import Inicio from './Inicio'
@@ -34,6 +34,7 @@ export default function App() {
   const [activaId, setActivaId] = useState(() => leer('musa-marca-activa', null))
   const [mensajes, setMensajes] = useState([SALUDO])
   const [pendienteChat, setPendienteChat] = useState('')
+  const [tendencias, setTendencias] = useState({ lista: [], cargando: true })
 
   const cargarMarcas = useCallback(() => {
     setDatos((d) => ({ ...d, cargando: true, error: false }))
@@ -52,6 +53,9 @@ export default function App() {
   useEffect(() => {
     cargarMarcas()
     cargarPosts()
+    traerTendencias()
+      .then((lista) => setTendencias({ lista, cargando: false }))
+      .catch(() => setTendencias({ lista: [], cargando: false }))
   }, [cargarMarcas, cargarPosts])
 
   useEffect(() => {
@@ -96,6 +100,8 @@ export default function App() {
     activa,
     elegirMarca,
     ir,
+    tendencias: tendencias.lista,
+    cargandoTendencias: tendencias.cargando,
   }
 
   return (

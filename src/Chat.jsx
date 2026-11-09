@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
-import { chatear, crearProyecto, crearParrilla, agendarAprobados, traerPosts, formatoFecha, GOOGLE_CALENDAR } from './api'
+import { chatear, crearProyecto, crearParrilla, agendarAprobados, traerPosts, formatoFecha, tendenciasParaChat, GOOGLE_CALENDAR } from './api'
 import { leerBrandbook } from './leerArchivo'
 import Mascota, { Estrella } from './Mascota'
 import { PuntosColor, Svg } from './piezas'
 
 const SUGERENCIAS = [
+  '¿Qué está en tendencia hoy?',
   'Quiero la parrilla de esta semana',
   'Tengo una marca nueva',
-  '¿Qué tipo de reels me recomiendas?',
   'Agenda lo que ya aprobé',
 ]
 
@@ -37,6 +37,7 @@ export default function Chat({
   setMensajes,
   pendiente,
   limpiarPendiente,
+  tendencias = [],
 }) {
   const [texto, setTexto] = useState('')
   const [pensando, setPensando] = useState(false)
@@ -96,6 +97,7 @@ export default function Chat({
         contexto_marca: contexto,
         marcas: marcas.map((m) => m.nombre).join(', '),
         plantillas: plantillas.join(', '),
+        tendencias: tendenciasParaChat(tendencias),
         pendientes: String(posts.filter((p) => p.estado === 'Por revisar' && (!activa || p.proyecto === activa.id)).length),
         adjunto: adjunto ? `sí, el archivo "${adjunto.nombre}". Inicio del documento: ${adjunto.texto.slice(0, 1500)}` : '',
       })

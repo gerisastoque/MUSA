@@ -412,3 +412,19 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ---------- Tendencias ---------- */
+.titulo-con-etiqueta { display: flex; flex-direction: column; gap: 12px; }
+.etiqueta-lima { background: var(--lima-suave); border: 1.5px solid var(--lima); }
+.tendencias-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+.tendencia { min-height: 170px; padding: 18px; border-radius: var(--r-m); background: #fff; border: 2px solid var(--ink); display: flex; flex-direction: column; gap: 10px; }
+.tendencia:nth-child(4n+1) { box-shadow: 4px 4px 0 var(--lavanda); }
+.tendencia:nth-child(4n+2) { box-shadow: 4px 4px 0 var(--rosa); }
+.tendencia:nth-child(4n+3) { box-shadow: 4px 4px 0 var(--amarillo); }
+.tendencia:nth-child(4n+4) { box-shadow: 4px 4px 0 var(--lima); }
+.tendencia.esqueleto { box-shadow: none; }
+.tendencia h3 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 22px; line-height: 1.1; letter-spacing: -0.01em; text-transform: capitalize; }
+.tendencia-num { font-family: var(--display); font-weight: 800; font-size: 15px; color: var(--muted); }
+.tendencia-fuente { margin-top: auto; display: flex; flex-direction: column; gap: 4px; font-size: 13px; line-height: 1.4; color: var(--ink-2); text-decoration: none; }
+.tendencia-fuente span { font-weight: 700; color: var(--azul); }
+.tendencia-fuente:hover { color: var(--ink); }
