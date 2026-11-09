@@ -142,7 +142,7 @@ export default function Revision({ posts, cargandoPosts, errorPosts, cargarPosts
                   </span>
                   <h2 className="post-titulo">{p.gancho || p.titulo}</h2>
                   {p.caption && <p className="post-texto">{p.caption}</p>}
-                  {p.tendencia && (
+                  {p.tendencia && p.tendencia !== 'Sin tendencia' && (
                     <span className="chip-tendencia">
                       ↗ {p.tendencia.slice(0, 60)}
                       {p.fuente && (
