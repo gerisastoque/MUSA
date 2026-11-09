@@ -23,6 +23,4 @@ npm run dev
 
 ## Publicar en GitHub Pages
 
-```bash
-npm run deploy
-```
+`npm run build` genera la carpeta `dist`, que se publica en la rama `gh-pages`.
