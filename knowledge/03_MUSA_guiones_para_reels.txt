@@ -1,0 +1,85 @@
+MUSA · GUÍA 03 · GUIONES PARA REELS Y TIKTOKS
+Base de conocimiento para el agente Guionista de MUSA.
+Uso: consultar antes de escribir el guion de un video corto vertical.
+
+==================================================
+1. ESTRUCTURA BASE (15 a 30 segundos)
+==================================================
+- 0 a 3 s · GANCHO: la frase o imagen que detiene el scroll. Sin introducciones.
+- 3 a 20 s · DESARROLLO: el valor del video (tips, proceso, historia, transformación).
+- Últimos 3 a 5 s · CIERRE + CTA: remate y llamada a la acción.
+
+==================================================
+2. FORMATO DE ENTREGA DEL GUION
+==================================================
+Una escena por línea, con este formato:
+"0-3 s | Plano | Acción | Texto en pantalla"
+Al final, una línea: "Audio sugerido: ..."
+
+Ejemplo (marca ficticia de café):
+0-3 s | Primer plano de la taza | Se sirve el café y sale vapor | Nadie te contó esto del V60
+3-8 s | Plano cenital | Se muele el café | Muele medio, no fino
+8-14 s | Plano detalle | Se vierte agua en círculos | Agua a 92 °C, no hirviendo
+14-20 s | Plano medio | Persona prueba y sonríe | Más dulce, sin azúcar
+20-25 s | Plano del producto | Bolsa de café sobre la mesa | Guárdalo para tu próximo café
+Audio sugerido: música acústica suave, ritmo tranquilo
+
+==================================================
+3. TIPOS DE PLANO (vocabulario para el guion)
+==================================================
+- Plano general: muestra el lugar completo.
+- Plano medio: persona de la cintura hacia arriba.
+- Primer plano: rostro o producto cercano.
+- Plano detalle: manos, texturas, un objeto pequeño.
+- Plano cenital: cámara desde arriba (ideal para recetas y productos).
+- POV: la cámara es los ojos de la persona.
+- Selfie: la persona habla a cámara con el celular en la mano.
+
+==================================================
+4. TIPOS DE REEL QUE FUNCIONAN PARA MARCAS
+==================================================
+1. Tutorial rápido: "cómo hacer X en 3 pasos".
+2. Detrás de cámaras: el proceso, el equipo, el día a día.
+3. Antes y después: transformación visible.
+4. POV: situación con la que la audiencia se identifica.
+5. Mito vs. realidad.
+6. Respuesta a una pregunta frecuente de clientes.
+7. Tendencia adaptada: formato o audio del momento llevado a la voz de la marca.
+8. Lista: "3 cosas que..." con un corte por cada punto.
+
+==================================================
+5. REGLAS DE PRODUCCIÓN (pensadas para grabar con celular)
+==================================================
+- Cada escena debe poder grabarse con un celular, sin equipos profesionales.
+- Escenas de 2 a 6 segundos: los cortes rápidos mantienen la atención.
+- Luz natural, de frente o lateral. Evitar contraluces.
+- El texto en pantalla resume lo que pasa: muchas personas ven sin sonido.
+- Texto en pantalla corto (máximo 7 palabras por escena) y en la zona central.
+- Si alguien habla a cámara, frases cortas y naturales, nada de lectura evidente.
+
+==================================================
+6. AUDIO
+==================================================
+- Sugerir el TIPO de audio (ritmo, estilo, emoción) o una tendencia de audio identificada por el agente de tendencias.
+- No asumir que un audio específico con derechos está disponible para la marca.
+- Si hay voz en off, que no compita con la música.
+
+==================================================
+7. PROMPT DE VIDEO PARA GENERACIÓN CON IA (Veo)
+==================================================
+Cuando se pida un prompt_video:
+- En inglés.
+- Un solo clip de 8 segundos.
+- Describir: sujeto, acción, movimiento de cámara, luz, paleta de la marca, ambiente.
+- Formato vertical 9:16.
+- Terminar siempre con: "no text on screen".
+- Pensado como clip de apoyo (b-roll), no como el reel completo.
+
+==================================================
+8. ERRORES A EVITAR
+==================================================
+- Empezar con el logo o un saludo.
+- Escenas largas sin cambio de plano.
+- Guiones imposibles de grabar (drones, actores, locaciones costosas).
+- Texto en pantalla largo o en los bordes (lo tapa la interfaz).
+- Más de un CTA.

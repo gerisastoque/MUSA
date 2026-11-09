@@ -1,0 +1,75 @@
+MUSA · GUÍA 04 · PILARES DE CONTENIDO Y PLANEACIÓN DE LA PARRILLA
+Base de conocimiento para los agentes Brandbook y Estratega de MUSA.
+Uso: consultar al definir los pilares de una marca y al planear la parrilla de la semana.
+
+==================================================
+1. QUÉ ES UN PILAR DE CONTENIDO
+==================================================
+Un pilar es un gran tema del que la marca habla de forma constante. Ordena la parrilla y evita improvisar.
+- Una marca debe tener entre 3 y 5 pilares.
+- Cada pilar debe conectar algo que a la marca le importa con algo que a su audiencia le interesa.
+- Cada pilar tiene un nombre corto y una descripción de una frase.
+
+Ejemplo (marca ficticia de café de especialidad):
+- Origen: historias de las fincas, los productores y el proceso del grano.
+- Preparación en casa: recetas y métodos fáciles.
+- Comunidad: clientes, eventos, preguntas y opiniones.
+- Producto: lanzamientos, promociones y novedades.
+
+==================================================
+2. LOS CUATRO OBJETIVOS DEL CONTENIDO
+==================================================
+- EDUCAR: enseñar algo útil. Genera confianza y guardados.
+- INSPIRAR: emocionar, mostrar un estilo de vida o una aspiración. Genera alcance y compartidos.
+- COMUNIDAD: conversar, mostrar lo humano. Genera comentarios y fidelidad.
+- VENDER: lanzamientos, ofertas, beneficios del producto. Genera clics y compras.
+
+Balance recomendado en una semana: la mayoría del contenido aporta valor (educar, inspirar, comunidad) y la minoría vende directamente. Una referencia de trabajo común es que no más de 1 de cada 4 o 5 posts sea de venta directa.
+
+==================================================
+3. CÓMO PLANEAR LA PARRILLA
+==================================================
+Para cada post definir:
+- Fecha y hora sugerida.
+- Red (Instagram, TikTok, Facebook o LinkedIn), solo redes que usa la marca.
+- Formato (Reel, Carrusel o Historia).
+- Pilar.
+- Objetivo (Vender, Educar, Comunidad o Inspirar).
+- Tema en una frase.
+- Idea en 2 frases (cómo se vería).
+- Tendencia usada y su fuente, si aplica.
+
+Reglas:
+- Publicar en días distintos.
+- No repetir el mismo pilar dos días seguidos.
+- Mezclar formatos durante la semana.
+- Respetar la petición de la persona (tema, temporada o campaña) como hilo conductor de la semana.
+- Usar como máximo 2 tendencias por semana, y solo si encajan con la marca.
+
+==================================================
+4. HORARIOS
+==================================================
+- No existe una hora perfecta universal. La mejor hora depende de la audiencia de cada marca y se descubre con las estadísticas de la cuenta.
+- Mientras no haya datos, sugerir horarios razonables según la rutina de la audiencia del brandbook. Por ejemplo, para estudiantes y trabajadores: antes de iniciar el día, a la hora del almuerzo o al final de la tarde.
+- Presentar siempre la hora como sugerencia, no como dato comprobado.
+
+==================================================
+5. FECHAS ESPECIALES (Colombia)
+==================================================
+Algunas fechas y temporadas que suelen usar las marcas en Colombia:
+- Enero: inicio de año, propósitos.
+- Febrero: temporada escolar y universitaria; Amor y Amistad NO es en febrero en Colombia.
+- Marzo: Día de la Mujer (8 de marzo).
+- Mayo: Día de la Madre (segundo domingo de mayo).
+- Junio: Día del Padre (tercer domingo de junio); vacaciones de mitad de año.
+- Julio: Independencia de Colombia (20 de julio).
+- Septiembre: Amor y Amistad (tercer sábado de septiembre).
+- Octubre: Halloween (31 de octubre).
+- Noviembre: Black Friday; inicio de la temporada navideña.
+- Diciembre: Día de las Velitas (7 de diciembre), novenas (16 al 24), Navidad y fin de año.
+Usar las fechas solo si tienen relación con la marca y su audiencia.
+
+==================================================
+6. REVISIÓN HUMANA
+==================================================
+Todo lo que genera MUSA queda en estado "Por revisar". Una persona revisa, ajusta y aprueba cada post antes de programarlo. La IA propone; la persona decide.

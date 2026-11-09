@@ -1,0 +1,76 @@
+MUSA · GUÍA 01 · FORMATOS POR RED SOCIAL
+Base de conocimiento para los agentes de MUSA (Estratega, Guionista, Copy y Director de arte).
+Uso: consultar antes de decidir formato, medidas, duración y extensión de textos.
+Nota: las redes cambian sus límites con frecuencia. Estas son referencias de trabajo; ante la duda, priorizar contenido corto y vertical.
+
+==================================================
+1. INSTAGRAM
+==================================================
+
+1.1 Publicación en el feed (imagen única)
+- Medida recomendada: 1080 x 1350 px (vertical 4:5). Ocupa más pantalla que el cuadrado.
+- Alternativa: 1080 x 1080 px (cuadrado 1:1).
+- Uso ideal: anuncios, frases, producto protagonista, resultados.
+
+1.2 Carrusel
+- Medida: 1080 x 1350 px (4:5) en todas las slides, siempre la misma medida.
+- Cantidad recomendada: entre 5 y 8 slides. Más slides solo si cada una aporta algo nuevo.
+- Slide 1 = gancho (promesa o pregunta). Última slide = CTA (guardar, compartir, comentar, visitar).
+- Máximo recomendado: 25 palabras por slide. Una idea por slide.
+- Uso ideal: contenido educativo, paso a paso, listas, antes y después, mitos y verdades.
+
+1.3 Reel
+- Medida: 1080 x 1920 px (vertical 9:16).
+- Duración recomendada para MUSA: entre 15 y 30 segundos.
+- Zona segura: dejar libres los bordes superior e inferior (ahí aparecen el nombre, el caption y los botones). El texto en pantalla va en la franja central.
+- Portada: debe funcionar recortada en 4:5 en la cuadrícula del perfil.
+- Uso ideal: tendencias, detrás de cámaras, tutoriales rápidos, entretenimiento.
+
+1.4 Historia
+- Medida: 1080 x 1920 px (vertical 9:16).
+- Dura 24 horas. Contenido inmediato y cercano.
+- Texto corto: máximo 15 palabras por historia.
+- Siempre que se pueda, incluir una interacción: encuesta, pregunta, quiz, deslizador o cuenta regresiva.
+- Uso ideal: comunidad, opiniones, avisos rápidos, promociones con fecha límite.
+
+1.5 Caption (texto que acompaña la publicación)
+- Las primeras 1 o 2 líneas son las únicas que se ven sin tocar "más": ahí va el gancho.
+- Extensión recomendada para MUSA: hasta 600 caracteres.
+- Hashtags: 3 a 5 relevantes (marca, tema, nicho, ubicación). Evitar hashtags genéricos o masivos.
+
+==================================================
+2. TIKTOK
+==================================================
+- Medida: 1080 x 1920 px (vertical 9:16).
+- Duración recomendada para MUSA: entre 15 y 30 segundos.
+- Los primeros 2 o 3 segundos deciden si la persona sigue viendo: arrancar con el gancho, sin introducciones.
+- Tono más espontáneo y menos producido que en Instagram. Se valora lo auténtico y lo grabado con celular.
+- Texto en pantalla grande y legible, en la zona central.
+- Audios en tendencia: sugerir el tipo de audio, nunca asumir que un audio específico está disponible.
+- Caption corto: una frase + 3 a 5 hashtags.
+
+==================================================
+3. FACEBOOK
+==================================================
+- Imagen: 1080 x 1350 px (4:5) o 1080 x 1080 px (1:1).
+- Video vertical (Reels): 1080 x 1920 px (9:16).
+- Público que suele leer más que en otras redes: el texto puede ser un poco más largo y explicativo.
+- Uso ideal: comunidad local, eventos, información práctica.
+
+==================================================
+4. LINKEDIN
+==================================================
+- Imagen: 1080 x 1350 px (4:5) o 1200 x 627 px (horizontal).
+- Carrusel: se sube como documento PDF, una slide por página.
+- Tono profesional, cercano y con aprendizajes. Evitar el lenguaje de venta directa.
+- Uso ideal: logros, aprendizajes, procesos, liderazgo de opinión, equipo.
+
+==================================================
+5. REGLAS DE DECISIÓN RÁPIDA PARA EL ESTRATEGA
+==================================================
+- Si el objetivo es EDUCAR -> Carrusel (o Reel tipo tutorial).
+- Si el objetivo es INSPIRAR o subirse a una TENDENCIA -> Reel.
+- Si el objetivo es COMUNIDAD -> Historia con interacción, o Reel detrás de cámaras.
+- Si el objetivo es VENDER -> Carrusel con beneficios o Historia con oferta y fecha límite.
+- En una semana, mezclar formatos: no repetir el mismo formato tres veces seguidas.
+- Repartir los pilares de contenido de la marca: no repetir el mismo pilar dos días seguidos.

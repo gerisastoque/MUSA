@@ -1,0 +1,103 @@
+MUSA · GUÍA 02 · COPY: GANCHOS, ESTRUCTURAS Y CTA
+Base de conocimiento para los agentes Copy y Guionista de MUSA.
+Uso: consultar antes de escribir ganchos, captions, textos de slides e historias.
+
+==================================================
+1. PRINCIPIOS DEL BUEN COPY EN REDES
+==================================================
+- Una sola idea por publicación. Si hay dos ideas, son dos posts.
+- Escribir como habla la marca (ver su brandbook: personalidad, tono, "sí decimos" y "no decimos").
+- Frases cortas. Palabras simples. Nada de relleno.
+- Hablarle a UNA persona ("tú" o "usted", según el tono de la marca), no a "todos".
+- Beneficio antes que característica: no "café de altura a 1.800 m", sino "un café más dulce sin agregar azúcar".
+- Concreto antes que genérico: no "el mejor servicio", sino "te respondemos en menos de una hora".
+- Nunca usar las palabras prohibidas de la marca.
+- No inventar datos, cifras, premios ni testimonios.
+
+==================================================
+2. EL GANCHO (primera línea o primeros 3 segundos)
+==================================================
+Reglas:
+- Máximo 8 palabras.
+- Debe generar curiosidad, identificación o una promesa clara.
+- Nunca empezar con "Hola", "Bienvenidos" ni el nombre de la marca.
+
+Fórmulas de gancho (adaptar a la voz de la marca):
+1. Error común: "El error que cometes al [acción]".
+2. Lista: "3 [cosas] que [beneficio]".
+3. Pregunta directa: "¿Sabías que [dato o situación cotidiana]?"
+4. Contraste: "Todos hacen [X]. Nosotros [Y]."
+5. Promesa: "Así logras [resultado] en [tiempo corto]".
+6. Secreto o detrás de cámaras: "Lo que nadie ve de [proceso]".
+7. Identificación: "Si te pasa [situación], esto es para ti".
+8. POV: "POV: [situación con la que la audiencia se identifica]".
+9. Mito: "No, [creencia común] no es cierto".
+10. Antes y después: "De [situación inicial] a [resultado]".
+
+==================================================
+3. ESTRUCTURAS DE TEXTO
+==================================================
+
+AIDA (para vender o lanzar):
+- Atención: el gancho.
+- Interés: el problema o la situación de la audiencia.
+- Deseo: el beneficio concreto de la marca.
+- Acción: el CTA.
+
+PAS (para resolver un problema):
+- Problema: nombrar el dolor con las palabras de la audiencia.
+- Agitación: mostrar por qué importa.
+- Solución: lo que propone la marca.
+
+Lista útil (para educar):
+- Gancho con número -> un punto por línea o por slide -> cierre con CTA de guardar.
+
+Historia corta (para comunidad):
+- Situación -> giro o aprendizaje -> pregunta a la audiencia.
+
+==================================================
+4. CALL TO ACTION (CTA)
+==================================================
+Un solo CTA por publicación, alineado con el objetivo:
+- Educar -> "Guárdalo para tu próxima [ocasión]" / "Compártelo con quien lo necesita".
+- Comunidad -> "Cuéntanos en comentarios..." / "¿Tú cuál prefieres?".
+- Vender -> "Pide el tuyo en [canal]" / "Válido hasta [fecha]".
+- Inspirar -> "Etiqueta a alguien que..." / "Síguenos para más [tema]".
+
+==================================================
+5. CAPTIONS
+==================================================
+- Línea 1: gancho (lo único que se ve sin abrir).
+- Líneas 2 a 4: desarrollo breve.
+- Última línea: CTA.
+- Después: 3 a 5 hashtags (marca + tema + nicho + ubicación si aplica).
+- Extensión máxima en MUSA: 600 caracteres.
+- Emojis: solo si la personalidad de la marca lo permite, y como apoyo, no como reemplazo de palabras.
+
+==================================================
+6. TEXTOS DE CARRUSEL
+==================================================
+- Slide 1: gancho grande, máximo 8 palabras.
+- Slides intermedias: un punto por slide, título corto + máximo 25 palabras.
+- Penúltima slide: resumen o idea clave.
+- Última slide: CTA.
+- Formato de entrega: "Slide 1: ...", "Slide 2: ...".
+
+==================================================
+7. TEXTOS DE HISTORIA
+==================================================
+- Máximo 15 palabras.
+- Siempre con una interacción sugerida y sus opciones:
+  - Encuesta: dos opciones cortas y claras.
+  - Pregunta: abierta, fácil de responder.
+  - Quiz: una respuesta correcta y dos distractores creíbles.
+  - Deslizador: una emoción con emoji.
+
+==================================================
+8. ERRORES A EVITAR
+==================================================
+- Frases vacías: "calidad", "innovación", "pasión por lo que hacemos" sin un ejemplo concreto.
+- Exceso de signos de exclamación.
+- Hashtags genéricos (#love, #instagood) o más de 5.
+- Prometer resultados que la marca no puede garantizar.
+- Copiar textos de otras marcas o de la tendencia: usarla como inspiración, nunca como copia.

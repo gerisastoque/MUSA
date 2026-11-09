@@ -1,0 +1,61 @@
+MUSA · GUÍA 06 · DIRECCIÓN DE ARTE Y PROMPTS DE IMAGEN
+Base de conocimiento para el agente Director de arte de MUSA.
+Uso: consultar antes de escribir el prompt de imagen de un post.
+
+==================================================
+1. ESTRUCTURA DE UN BUEN PROMPT DE IMAGEN
+==================================================
+Escribir en inglés, en este orden:
+1. Sujeto: qué o quién aparece (producto, manos, persona, escena).
+2. Acción: qué está pasando.
+3. Escenario: dónde ocurre.
+4. Encuadre y composición: tipo de plano, ángulo, dónde se ubica el sujeto.
+5. Luz: natural, de ventana, cálida, suave, contraluz, hora dorada, estudio.
+6. Paleta: los colores de la marca con sus códigos hex.
+7. Estilo y textura: fotografía, ilustración plana, 3D, collage; grano, materiales.
+8. Espacio para texto: dónde queda libre (arriba, abajo, a un lado).
+9. Restricciones: terminar siempre con "no text, no letters, no logos, no watermarks".
+
+==================================================
+2. COMPOSICIÓN SEGÚN EL FORMATO
+==================================================
+- Historia o portada de reel (1024 x 1536): sujeto en el centro, espacio libre arriba o abajo para texto; nada importante en los bordes.
+- Feed o carrusel (1024 x 1024): sujeto en un tercio de la imagen y espacio libre en el otro lado.
+- Portada de reel: debe funcionar también recortada en 4:5 en la cuadrícula del perfil.
+
+==================================================
+3. TRADUCIR EL BRANDBOOK A LA IMAGEN
+==================================================
+- Estilo visual del brandbook -> estilo de la imagen.
+- Mood (3 palabras) -> luz, color y ambiente. Ejemplos de traducción:
+  - Acogedor -> warm natural light, soft shadows, wooden textures.
+  - Enérgico -> bright light, high contrast, dynamic angle.
+  - Minimalista -> clean background, lots of negative space, simple composition.
+  - Artesanal -> handmade textures, natural materials, imperfect details.
+- Colores -> mencionarlos con su hex y su uso (dominante, secundario, acento).
+- "Qué evitar en imágenes" -> nunca incluirlo en el prompt.
+
+==================================================
+4. REGLAS IMPORTANTES
+==================================================
+- Nunca pedir texto dentro de la imagen: los generadores todavía fallan escribiendo, sobre todo en español. El texto va en el diseño final o en el copy.
+- No pedir logos ni marcas registradas de terceros.
+- No describir personas reales ni famosas.
+- Personas: describirlas de forma general y diversa, sin estereotipos.
+- Pensar la imagen como base editable: la persona puede montarle el texto y el logo después en Canva o Figma.
+- Máximo 1.200 caracteres por prompt.
+
+==================================================
+5. TEXTO ALTERNATIVO (accesibilidad)
+==================================================
+- En español, máximo 2 frases.
+- Describe lo que se ve, no lo que la marca quiere vender.
+- Ejemplo: "Manos sirviendo café en una taza de cerámica sobre una mesa de madera, con luz cálida de ventana."
+
+==================================================
+6. EJEMPLO COMPLETO (marca ficticia)
+==================================================
+Prompt:
+"Close-up of hands pouring coffee from a gooseneck kettle into a ceramic cup on a wooden counter, steam rising. Cozy small café in the morning. Three-quarter angle, cup in the lower third, generous empty space in the upper area. Soft warm natural window light. Palette: dark coffee #4B2E1A dominant, beige #D8C6A3 secondary, cream #F5E9D6 accent. Warm documentary photography, natural textures of wood and ceramic, subtle film grain. No text, no letters, no logos, no watermarks."
+Tamaño: 1024 x 1536
+Texto alternativo: "Manos sirviendo café con una tetera de cuello largo en una taza de cerámica, con vapor y luz cálida de mañana."
