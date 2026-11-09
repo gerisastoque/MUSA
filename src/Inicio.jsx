@@ -4,7 +4,7 @@ import { Etiqueta, PuntosColor, Svg } from './piezas'
 
 const SUGERENCIAS = ['Tengo una marca nueva', 'Arma mi parrilla de la semana', 'Agenda lo que aprobé']
 
-export default function Inicio({ marcas, posts, activa, elegirMarca, ir, cargandoMarcas, tendencias = [], cargandoTendencias }) {
+export default function Inicio({ marcas, posts, activa, elegirMarca, ir, cargandoMarcas, tendencias = [], musica = [], cargandoTendencias }) {
   const [idea, setIdea] = useState('')
   const porRevisar = posts.filter((p) => p.estado === 'Por revisar').length
 
@@ -103,7 +103,7 @@ export default function Inicio({ marcas, posts, activa, elegirMarca, ir, cargand
         <div className="seccion-cabeza">
           <div className="titulo-con-etiqueta">
             <span className="etiqueta etiqueta-lima">
-              <span className="punto-vivo" /> EN VIVO · GOOGLE TRENDS COLOMBIA
+              <span className="punto-vivo" /> EN VIVO · GOOGLE TRENDS + APPLE MUSIC
             </span>
             <h2 className="display-m">Lo que está pasando hoy</h2>
           </div>
@@ -112,8 +112,8 @@ export default function Inicio({ marcas, posts, activa, elegirMarca, ir, cargand
           </button>
         </div>
         <p className="lead">
-          Lo más buscado en Colombia, con la noticia que lo explica. MUSA solo usa las tendencias que encajan con tu marca y
-          descarta las de riesgo (política, tragedias, polémicas).
+          De qué se habla y qué se escucha hoy en Colombia. MUSA solo usa lo que encaja con tu marca y descarta los temas de
+          riesgo (política, tragedias, polémicas).
         </p>
         {cargandoTendencias ? (
           <div className="tendencias-grid">
@@ -143,6 +143,32 @@ export default function Inicio({ marcas, posts, activa, elegirMarca, ir, cargand
                 </article>
               )
             })}
+          </div>
+        )}
+
+        {musica.length > 0 && (
+          <div className="musica">
+            <div className="fila-entre">
+              <h3 className="musica-titulo">Sonando en Colombia</h3>
+              <span className="ayuda">Apple Music · lo más escuchado hoy</span>
+            </div>
+            <div className="musica-fila">
+              {musica.slice(0, 8).map((c, i) => (
+                <a key={c.url || i} className="cancion" href={c.url} target="_blank" rel="noreferrer">
+                  {c.portada && <img src={c.portada} alt="" width="56" height="56" loading="lazy" />}
+                  <span className="cancion-texto">
+                    <strong>
+                      {i + 1}. {c.cancion}
+                    </strong>
+                    <span>{c.artista}</span>
+                  </span>
+                </a>
+              ))}
+            </div>
+            <p className="ayuda">
+              MUSA sugiere el audio de cada reel según la personalidad de la marca. Antes de usarlo, verifica que la canción esté en
+              la biblioteca de audio comercial de la red.
+            </p>
           </div>
         )}
       </section>

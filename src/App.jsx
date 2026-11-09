@@ -34,7 +34,7 @@ export default function App() {
   const [activaId, setActivaId] = useState(() => leer('musa-marca-activa', null))
   const [mensajes, setMensajes] = useState([SALUDO])
   const [pendienteChat, setPendienteChat] = useState('')
-  const [tendencias, setTendencias] = useState({ lista: [], cargando: true })
+  const [tendencias, setTendencias] = useState({ lista: [], musica: [], cargando: true })
 
   const cargarMarcas = useCallback(() => {
     setDatos((d) => ({ ...d, cargando: true, error: false }))
@@ -54,8 +54,8 @@ export default function App() {
     cargarMarcas()
     cargarPosts()
     traerTendencias()
-      .then((lista) => setTendencias({ lista, cargando: false }))
-      .catch(() => setTendencias({ lista: [], cargando: false }))
+      .then((d) => setTendencias({ ...d, cargando: false }))
+      .catch(() => setTendencias({ lista: [], musica: [], cargando: false }))
   }, [cargarMarcas, cargarPosts])
 
   useEffect(() => {
@@ -101,6 +101,7 @@ export default function App() {
     elegirMarca,
     ir,
     tendencias: tendencias.lista,
+    musica: tendencias.musica,
     cargandoTendencias: tendencias.cargando,
   }
 

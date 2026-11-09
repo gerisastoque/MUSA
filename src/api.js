@@ -100,7 +100,7 @@ export const leer = (k, def) => {
 export async function traerTendencias() {
   try {
     const cache = JSON.parse(sessionStorage.getItem('musa-tendencias') || 'null')
-    if (cache && Date.now() - cache.t < 30 * 60 * 1000) return cache.lista
+    if (cache && cache.v === 2 && Date.now() - cache.t < 30 * 60 * 1000) return cache.datos
   } catch {
     /* sin almacenamiento */
   }
@@ -117,13 +117,27 @@ export async function traerTendencias() {
       medio: texto(n, 'news_item_source'),
     })),
   })).filter((t) => t.titulo)
+  const musica = (r.musica?.feed?.results || []).slice(0, 12).map((c) => ({
+    cancion: c.name,
+    artista: c.artistName,
+    url: c.url,
+    portada: c.artworkUrl100,
+    genero: (c.genres || []).map((g) => g.name).filter((g) => g !== 'Música').join(', '),
+  }))
+  const datos = { lista, musica }
   try {
-    sessionStorage.setItem('musa-tendencias', JSON.stringify({ t: Date.now(), lista }))
+    sessionStorage.setItem('musa-tendencias', JSON.stringify({ v: 2, t: Date.now(), datos }))
   } catch {
     /* sin almacenamiento */
   }
-  return lista
+  return datos
 }
+
+export const musicaParaChat = (musica = []) =>
+  musica
+    .slice(0, 10)
+    .map((c, i) => `${i + 1}. ${c.cancion} - ${c.artista}${c.genero ? ` (${c.genero})` : ''}`)
+    .join('; ')
 
 export const tendenciasParaChat = (lista = []) =>
   lista

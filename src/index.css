@@ -428,3 +428,13 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 .tendencia-fuente { margin-top: auto; display: flex; flex-direction: column; gap: 4px; font-size: 13px; line-height: 1.4; color: var(--ink-2); text-decoration: none; }
 .tendencia-fuente span { font-weight: 700; color: var(--azul); }
 .tendencia-fuente:hover { color: var(--ink); }
+.musica { margin-top: 8px; padding: 20px; border-radius: var(--r-l); background: var(--ink); color: #fff; display: flex; flex-direction: column; gap: 14px; }
+.musica .ayuda { color: #cfc8de; }
+.musica-titulo { margin: 0; font-family: var(--display); font-weight: 800; font-size: 24px; }
+.musica-fila { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.cancion { display: flex; align-items: center; gap: 12px; padding: 8px; border-radius: 14px; background: rgba(255,255,255,.07); color: #fff; text-decoration: none; min-width: 0; }
+.cancion:hover { background: rgba(255,255,255,.14); color: #fff; }
+.cancion img { border-radius: 10px; flex: none; }
+.cancion-texto { display: grid; min-width: 0; font-size: 13px; line-height: 1.35; }
+.cancion-texto strong, .cancion-texto span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cancion-texto span { color: #cfc8de; }
